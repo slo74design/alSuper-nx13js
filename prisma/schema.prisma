@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model products {
+  ID         Int      @id @default(autoincrement())
+  idCat      Int?
+  idFamily   Int?
+  family     String?  @db.VarChar(100)
+  catTitle   String?  @db.VarChar(100)
+  title      String?  @db.VarChar(255)
+  subtitle   String?  @db.VarChar(255)
+  price      String?  @db.VarChar(50)
+  imgURL     String?  @db.VarChar(255)
+  type       String   @db.VarChar(255)
+  isSelected Boolean  @default(true)
+  createdAt  DateTime @default(now()) @db.DateTime(0)
+  updatedAt  DateTime @default(now()) @db.Timestamp(0)
+
+  @@index([catTitle], map: "catTitle")
+  @@index([family], map: "family")
+  @@index([title], map: "title")
+}

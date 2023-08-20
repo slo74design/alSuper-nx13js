@@ -1,5 +1,4 @@
 "use client"; //this is a client side component
-
 import JsonFinal from "@/lib/products";
 import { createSlice } from "@reduxjs/toolkit";
 

@@ -6,10 +6,13 @@ import {
     ArrowRightIcon,
     Bars3Icon,
     BellIcon,
+    ShoppingBagIcon,
     XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { Poiret_One } from "next/font/google";
 import Link from "next/link";
+import { useSelectedLayoutSegment } from "next/navigation";
+import { useSelector } from "react-redux";
 
 const caprasismo = Poiret_One({
     weight: ["400"],
@@ -26,19 +29,19 @@ const navigation = [
     {
         name: "Inicio",
         href: "/",
-        current: true,
+        activeSegment: null,
     },
     {
         name: "Mis Listas",
         href: "#",
-        current: false,
+        activeSegment: "lists",
     },
     {
         name: "Favoritos",
         href: "/favoritos",
-        current: false,
+        activeSegment: "favoritos",
     },
-    { name: "Stats", href: "#", current: false },
+    { name: "Stats", href: "#", activeSegment: "stats" },
 ];
 const userNavigation = [
     { name: "Your Profile", href: "#" },
@@ -51,9 +54,19 @@ function classNames(...classes) {
 }
 
 const PublicHeader = () => {
+    const activeSegment = useSelectedLayoutSegment();
+    const cartRedux = useSelector((state) => state.carts);
+
+    const getTotalQuantity = () => {
+        let total = 0;
+        cartRedux._cartList.forEach((item) => {
+            total += item.quantity;
+        });
+        return total;
+    };
     return (
         <>
-            <div className="min-h-full">
+            <div className="min-h-full sticky left-0 top-0 z-50">
                 <Disclosure as="nav" className="bg-merca-100">
                     {({ open }) => (
                         <>
@@ -79,7 +92,8 @@ const PublicHeader = () => {
                                                         key={item.name}
                                                         href={item.href}
                                                         className={classNames(
-                                                            item.current
+                                                            activeSegment ===
+                                                                item.activeSegment
                                                                 ? "bg-purple-50 text-merca-100"
                                                                 : "text-white hover:bg-slate-900 hover:bg-opacity-75",
                                                             "rounded-md px-3 py-2 text-sm font-medium"
@@ -98,10 +112,21 @@ const PublicHeader = () => {
                                     </div>
                                     <div className="hidden md:block">
                                         <div className="ml-4 flex items-center md:ml-6">
-                                            <button className="text-sm font-semibold leading-6 px-6 py-2 rounded-lg text-rsq-500 uppercase flex flex-row justify-center items-center gap-x-2">
+                                            <button
+                                                onClick={() =>
+                                                    console.log("clic")
+                                                }
+                                                className="text-sm font-semibold leading-6 px-6 py-2 rounded-lg text-rsq-500 uppercase flex flex-row justify-center items-center gap-x-2"
+                                            >
                                                 Crea tu Lista
                                                 <ArrowRightIcon className="w-4 h-4" />
                                             </button>
+                                            <div className="bg-purple-500 rounded-full p-2 relative">
+                                                <ShoppingBagIcon className="w-5 h-5 text-white" />
+                                                <div className="flex absolute -top-1.5 -right-2 bg-merca-200 text-white rounded-full w-4 h-4 items-center justify-center text-[9px] font-semibold">
+                                                    {getTotalQuantity() || 0}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="-mr-2 flex md:hidden">
@@ -192,8 +217,7 @@ const PublicHeader = () => {
                         <h1
                             className={`text-center font-light uppercase text-base leading-6 text-rsq-500`}
                         >
-                            Guardas tus listas para las próximas compra al
-                            Mercadona
+                            Guarda y comparte las próximas listas de compra
                         </h1>
                     </div>
                 </header>

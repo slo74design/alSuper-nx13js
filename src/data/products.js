@@ -1,4 +1,4 @@
-import mercadona from "@/lib/all-mercadona-14Ago23";
+import mercadona from "@/lib/all-16Ago23";
 
 const Products = mercadona; // import del json file de los productos
 
@@ -9,5 +9,6 @@ for (let i = 0; i < Products.length; i++) {
         JsonFinal.push(res[j]);
     }
 }
+// console.log(JSON.stringify(JsonFinal, null, 2));
 
 export default JsonFinal;
