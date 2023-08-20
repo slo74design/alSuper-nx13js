@@ -9,63 +9,9 @@ import {
 } from "@heroicons/react/24/outline";
 import { addToCart } from "@/features/cartSlice";
 import { toggleFav } from "@/features/bookmarks";
+import { getProducts } from "@/lib/getProducts";
 
-const people = [
-    {
-        name: "Leslie Alexander",
-        email: "leslie.alexander@example.com",
-        role: "Co-Founder / CEO",
-        imageUrl:
-            "https://prod-mercadona.imgix.net/images/f89ea17dfd5a9614604fe9b88281b3a8.jpg?fit=crop&h=600&w=600",
-        lastSeen: "3h ago",
-        lastSeenDateTime: "2023-01-23T13:23Z",
-    },
-    {
-        name: "Michael Foster",
-        email: "michael.foster@example.com",
-        role: "Co-Founder / CTO",
-        imageUrl:
-            "https://prod-mercadona.imgix.net/images/cebf2bdc09faf169cfc68aaa68a236e7.jpg?fit=crop&h=300&w=300",
-        lastSeen: "3h ago",
-        lastSeenDateTime: "2023-01-23T13:23Z",
-    },
-    {
-        name: "Dries Vincent",
-        email: "dries.vincent@example.com",
-        role: "Business Relations",
-        imageUrl:
-            "https://prod-mercadona.imgix.net/images/cb6ad3ab8715bccce7366991e7b475be.jpg?fit=crop&h=300&w=300",
-        lastSeen: null,
-    },
-    {
-        name: "Lindsay Walton",
-        email: "lindsay.walton@example.com",
-        role: "Front-end Developer",
-        imageUrl:
-            "https://prod-mercadona.imgix.net/images/865cf3093d477ffd5530d95bbe87f27d.jpg?fit=crop&h=300&w=300",
-        lastSeen: "3h ago",
-        lastSeenDateTime: "2023-01-23T13:23Z",
-    },
-    {
-        name: "Courtney Henry",
-        email: "courtney.henry@example.com",
-        role: "Designer",
-        imageUrl:
-            "https://prod-mercadona.imgix.net/images/509a4c94a0d5a34b6d4d79a6a1625ca2.jpg?fit=crop&h=300&w=300",
-        lastSeen: "3h ago",
-        lastSeenDateTime: "2023-01-23T13:23Z",
-    },
-    {
-        name: "Tom Cook",
-        email: "tom.cook@example.com",
-        role: "Director of Product",
-        imageUrl:
-            "https://prod-mercadona.imgix.net/images/7b5610514b8fc646d0a02def291b8b6d.jpg?fit=crop&h=300&w=300",
-        lastSeen: null,
-    },
-];
-
-const HomeList = () => {
+const HomeList = ({ dataProds }) => {
     const dispatch = useDispatch();
     const [dataApi, setDataApi] = useState([]);
     const [valueForm, setValueForm] = useState("");
@@ -76,15 +22,15 @@ const HomeList = () => {
     useEffect(() => {
         let res;
         setIsLoading(true);
-        setDataApi(prodsRedux._prodList);
+        setDataApi(dataProds);
         if (valueForm !== "") {
-            res = prodsRedux._prodList.filter((item) =>
+            res = dataProds.filter((item) =>
                 item.title.toLowerCase().includes(valueForm.toLowerCase())
             );
         }
         setDataApi(res);
         setIsLoading(false);
-    }, [prodsRedux, valueForm]);
+    }, [dataProds, valueForm]);
 
     const handleAddCart = (prod) => {
         const {

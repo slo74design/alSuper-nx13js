@@ -3,14 +3,13 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import jsonFinal from "@/lib/products";
+import { prisma } from "@/lib/prisma";
 import {
     ArrowRightIcon,
     ChevronRightIcon,
     EnvelopeIcon,
     MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
-import { prisma } from "@/lib/prisma";
 
 const HomeCategories = ({ distintCats }) => {
     const [dataApi, setDataApi] = useState([]);

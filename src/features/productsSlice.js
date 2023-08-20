@@ -1,9 +1,8 @@
 "use client"; //this is a client side component
-import JsonFinal from "@/lib/products";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    _prodList: JsonFinal,
+    _prodList: [],
 };
 
 export const productsSlice = createSlice({
