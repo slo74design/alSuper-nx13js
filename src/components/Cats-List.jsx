@@ -73,24 +73,26 @@ const CatsList = ({ data }) => {
                         priority
                     />
                 </div>
-                <h3 className="mt-4 text-sm text-gray-700">{data.title}</h3>
             </div>
-            <div className="flex flex-row justify-between items-center mt-3">
-                <p className="mt-1 text-sm font-medium text-gray-900">
-                    {data.price}
-                </p>
-                <div className="flex flex-row gap-x-2">
-                    <button onClick={() => handleBookmark(data)}>
-                        {favsRedux._favList.filter((e) => e.ID === data.ID)
-                            .length > 0 ? (
-                            <AiFillStar className="w-6 h-6 text-amber-500" />
-                        ) : (
-                            <AiOutlineStar className="w-6 h-6 text-amber-200" />
-                        )}
-                    </button>
-                    <button onClick={() => handleAddCart(data)}>
-                        <PlusCircleIcon className="w-6 h-6 text-rsq-200" />
-                    </button>
+            <div className="flex flex-col mt-3">
+                <h3 className="mt-4 text-sm text-gray-700">{data.title}</h3>
+                <div className="flex flex-row justify-between items-center">
+                    <p className="mt-1 text-sm font-medium text-gray-900">
+                        {data.price}
+                    </p>
+                    <div className="flex flex-row gap-x-2">
+                        <button onClick={() => handleBookmark(data)}>
+                            {favsRedux._favList.filter((e) => e.ID === data.ID)
+                                .length > 0 ? (
+                                <AiFillStar className="w-6 h-6 text-amber-500" />
+                            ) : (
+                                <AiOutlineStar className="w-6 h-6 text-amber-200" />
+                            )}
+                        </button>
+                        <button onClick={() => handleAddCart(data)}>
+                            <PlusCircleIcon className="w-6 h-6 text-rsq-200" />
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

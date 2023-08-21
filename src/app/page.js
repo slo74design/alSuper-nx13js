@@ -14,14 +14,14 @@ export default async function Home() {
     return (
         <main className="p-0 flex-1 max-h-screen bg-white">
             <div className="grid grid-cols-12 mx-auto max-w-screen px-4 sm:px-6 lg:px-8">
-                <div className="col-span-3">
+                <div className="col-span-12 lg:col-span-3">
                     <HomeCategories distintCats={distintCats} />
                 </div>
-                <div className="col-span-6 mx-6">
+                <div className="col-span-12 lg:col-span-6 mx-6">
                     {/* <HomeStats /> */}
                     <HomeList dataProds={allProds} />
                 </div>
-                <div className="col-span-3">
+                <div className="col-span-12 lg:col-span-3">
                     <HomeCart />
                 </div>
             </div>

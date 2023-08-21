@@ -24,7 +24,7 @@ const CatsSearchOnList = ({ prodsSelected }) => {
 
     return (
         <>
-            <div className="mt-4 px-8">
+            <div className="mt-4 lg:px-8">
                 <div className="relative mt-2">
                     <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                         <MagnifyingGlassIcon
@@ -42,7 +42,7 @@ const CatsSearchOnList = ({ prodsSelected }) => {
                     />
                 </div>
             </div>
-            <div className="grid grid-cols-2 gap-6 md:grid-cols-4 p-8">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-4 pt-8 lg:p-8">
                 {valueForm !== "" && dataApi?.length > 0
                     ? dataApi.map((product) => (
                           <CatsList key={product.ID} data={product} isFav={0} />

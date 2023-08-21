@@ -177,13 +177,13 @@ const PublicHeader = () => {
                                 </div>
                                 <div className="border-t border-indigo-700 pb-3 pt-4">
                                     <div className="flex items-center px-5">
-                                        <div className="flex-shrink-0">
+                                        {/* <div className="flex-shrink-0">
                                             <img
                                                 className="h-10 w-10 rounded-full"
                                                 src={user.imageUrl}
                                                 alt=""
                                             />
-                                        </div>
+                                        </div> */}
                                         <div className="ml-3">
                                             <div className="text-base font-medium text-white">
                                                 {user.name}

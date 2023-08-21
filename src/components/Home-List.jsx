@@ -104,59 +104,53 @@ const HomeList = ({ dataProds }) => {
                     />
                 </div>
             </div>
-            <div className="mt-4 overflow-y-auto h-80">
+            <div className="mt-4 overflow-y-auto h-40 lg:h-80">
                 <ul role="list" className="divide-y divide-gray-100">
-                    {valueForm !== "" &&
-                        dataApi?.length > 0 &&
-                        dataApi.map((item) => (
-                            <>
-                                {console.log(item)}
-                                <li
-                                    key={item.ID}
-                                    className="flex justify-between gap-x-6 py-5"
-                                >
-                                    <div className="flex min-w-0 gap-x-4">
-                                        <Image
-                                            className="h-12 w-12 flex-none rounded-full bg-gray-50"
-                                            src={item.imgURL}
-                                            alt=""
-                                            width={120}
-                                            height={120}
-                                        />
-                                        <div className="min-w-0 flex-auto">
-                                            <p className="text-sm font-medium leading-5 text-merca-100">
-                                                {item.title}
-                                            </p>
-                                            <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                                                {item.subtitle} | {item.price}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div className="hidden shrink-0 sm:flex sm:items-center justify-center gap-x-2">
-                                        <p className="text-sm leading-6 text-gray-900">
-                                            {item.price}
+                    {valueForm.length > 0 &&
+                        dataApi?.map((item) => (
+                            <li
+                                key={item.ID}
+                                className="flex justify-between gap-x-6 py-5"
+                            >
+                                <div className="flex min-w-0 gap-x-4">
+                                    <Image
+                                        className="h-12 w-12 flex-none rounded-full bg-gray-50"
+                                        src={item.imgURL}
+                                        alt=""
+                                        width={120}
+                                        height={120}
+                                    />
+                                    <div className="min-w-0 flex-auto">
+                                        <p className="text-sm font-medium leading-5 text-merca-100">
+                                            {item.title}
                                         </p>
-
-                                        <button
-                                            onClick={() => handleBookmark(item)}
-                                        >
-                                            {favsRedux._favList.filter(
-                                                (e) => e.ID === item.ID
-                                            ).length > 0 ? (
-                                                <AiFillStar className="w-6 h-6 text-amber-500" />
-                                            ) : (
-                                                <AiOutlineStar className="w-6 h-6 text-amber-200" />
-                                            )}
-                                        </button>
-
-                                        <button
-                                            onClick={() => handleAddCart(item)}
-                                        >
-                                            <PlusCircleIcon className="w-6 h-6 text-rsq-200" />
-                                        </button>
+                                        <p className="mt-1 truncate text-xs leading-5 text-gray-500">
+                                            {item.subtitle} | {item.price}
+                                        </p>
                                     </div>
-                                </li>
-                            </>
+                                </div>
+                                <div className="hidden shrink-0 sm:flex sm:items-center justify-center gap-x-2">
+                                    <p className="text-sm leading-6 text-gray-900">
+                                        {item.price}
+                                    </p>
+
+                                    <button
+                                        onClick={() => handleBookmark(item)}
+                                    >
+                                        {favsRedux._favList.filter(
+                                            (e) => e.ID === item.ID
+                                        ).length > 0 ? (
+                                            <AiFillStar className="w-6 h-6 text-amber-500" />
+                                        ) : (
+                                            <AiOutlineStar className="w-6 h-6 text-amber-200" />
+                                        )}
+                                    </button>
+
+                                    <button onClick={() => handleAddCart(item)}>
+                                        <PlusCircleIcon className="w-6 h-6 text-rsq-200" />
+                                    </button>
+                                </div>
+                            </li>
                         ))}
                 </ul>
             </div>
