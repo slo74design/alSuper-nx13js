@@ -7,6 +7,7 @@ import {
     MagnifyingGlassIcon,
     PlusCircleIcon,
 } from "@heroicons/react/24/outline";
+import { BsArrowReturnRight } from "react-icons/bs";
 import { addToCart } from "@/features/cartSlice";
 import { toggleFav } from "@/features/bookmarks";
 import { getProducts } from "@/lib/getProducts";
@@ -16,11 +17,10 @@ const HomeList = ({ dataProds }) => {
     const [dataApi, setDataApi] = useState([]);
     const [valueForm, setValueForm] = useState("");
     const [isLoading, setIsLoading] = useState(true);
-    const prodsRedux = useSelector((state) => state.products);
     const favsRedux = useSelector((state) => state.favs);
 
     useEffect(() => {
-        let res;
+        let res = [];
         setIsLoading(true);
         setDataApi(dataProds);
         if (valueForm !== "") {
@@ -81,13 +81,15 @@ const HomeList = ({ dataProds }) => {
         );
     };
 
+    // if (isLoading) return <p>Loading...</p>;
+
     return (
         <div className="block w-full mt-10 max-w-xl mx-auto">
             <h3 className="text-rsq-100 font-semibold text-base flex flex-row gap-x-3">
                 Encuentra el producto
             </h3>
-            <div className="mt-4">
-                <div className="relative mt-2">
+            <div className="mt-4 flex flex-row justify-between items-center">
+                <div className="relative mt-2 w-full h-14">
                     <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                         <MagnifyingGlassIcon
                             className="h-5 w-5 text-gray-400"
@@ -103,23 +105,27 @@ const HomeList = ({ dataProds }) => {
                         placeholder="Teclea el nombre del producto"
                     />
                 </div>
+                <button className="rounded-full ml-2 bg-rsq-400 p-2">
+                    <BsArrowReturnRight className="w-5 h-5 text-white" />
+                </button>
             </div>
             <div className="mt-4 overflow-y-auto h-40 lg:h-80">
                 <ul role="list" className="divide-y divide-gray-100">
-                    {valueForm.length > 0 &&
+                    {valueForm !== "" &&
+                        dataApi?.length > 0 &&
                         dataApi?.map((item) => (
                             <li
                                 key={item.ID}
                                 className="flex justify-between gap-x-6 py-5"
                             >
                                 <div className="flex min-w-0 gap-x-4">
-                                    <Image
+                                    {/* <Image
                                         className="h-12 w-12 flex-none rounded-full bg-gray-50"
                                         src={item.imgURL}
                                         alt=""
                                         width={120}
                                         height={120}
-                                    />
+                                    /> */}
                                     <div className="min-w-0 flex-auto">
                                         <p className="text-sm font-medium leading-5 text-merca-100">
                                             {item.title}

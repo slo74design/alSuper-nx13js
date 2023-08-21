@@ -62,7 +62,7 @@ const CatsList = ({ data }) => {
     };
     return (
         <div className="group relative p-4 border flex flex-col place-content-between">
-            <div>
+            {/* <div>
                 <div className="w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75">
                     <Image
                         src={data.imgURL}
@@ -73,7 +73,7 @@ const CatsList = ({ data }) => {
                         priority
                     />
                 </div>
-            </div>
+            </div> */}
             <div className="flex flex-col mt-3">
                 <h3 className="mt-4 text-sm text-gray-700">{data.title}</h3>
                 <div className="flex flex-row justify-between items-center">
