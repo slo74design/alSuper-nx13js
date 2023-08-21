@@ -45,10 +45,10 @@ const CatsSearchOnList = ({ prodsSelected }) => {
             <div className="grid grid-cols-1 gap-6 md:grid-cols-4 pt-8 lg:p-8">
                 {valueForm !== "" && dataApi?.length > 0
                     ? dataApi.map((product) => (
-                          <CatsList key={product.ID} data={product} isFav={0} />
+                          <CatsList key={product.ID} data={product} />
                       ))
                     : prodsSelected.map((product) => (
-                          <CatsList key={product.ID} data={product} isFav={0} />
+                          <CatsList key={product.ID} data={product} />
                       ))}
             </div>
         </>

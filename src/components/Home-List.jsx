@@ -7,30 +7,18 @@ import {
     MagnifyingGlassIcon,
     PlusCircleIcon,
 } from "@heroicons/react/24/outline";
-import { BsArrowReturnRight } from "react-icons/bs";
 import { addToCart } from "@/features/cartSlice";
 import { toggleFav } from "@/features/bookmarks";
 import { getProducts } from "@/lib/getProducts";
+import HomeCardList from "./Home-CardList";
+import { ReactSearchAutocomplete } from "react-search-autocomplete";
+// import Turnstone from "turnstone";
 
 const HomeList = ({ dataProds }) => {
     const dispatch = useDispatch();
     const [dataApi, setDataApi] = useState([]);
     const [valueForm, setValueForm] = useState("");
-    const [isLoading, setIsLoading] = useState(true);
     const favsRedux = useSelector((state) => state.favs);
-
-    useEffect(() => {
-        let res = [];
-        setIsLoading(true);
-        setDataApi(dataProds);
-        if (valueForm !== "") {
-            res = dataProds.filter((item) =>
-                item.title.toLowerCase().includes(valueForm.toLowerCase())
-            );
-        }
-        setDataApi(res);
-        setIsLoading(false);
-    }, [dataProds, valueForm]);
 
     const handleAddCart = (prod) => {
         const {
@@ -81,42 +69,66 @@ const HomeList = ({ dataProds }) => {
         );
     };
 
-    // if (isLoading) return <p>Loading...</p>;
+    const handleOnSearch = (string, results) => {
+        // onSearch will have as the first callback parameter
+        // the string searched and for the second the results.
+        // console.log(string, results);
+        setDataApi(results);
+    };
+
+    const handleOnSelect = (item) => {
+        setValueForm(item);
+    };
+
+    const formatResult = (item) => {
+        return (
+            <span key={item.ID} style={{ display: "block", textAlign: "left" }}>
+                {item.title} - {item.subtitle}
+            </span>
+        );
+    };
 
     return (
         <div className="block w-full mt-10 max-w-xl mx-auto">
             <h3 className="text-rsq-100 font-semibold text-base flex flex-row gap-x-3">
                 Encuentra el producto
             </h3>
-            <div className="mt-4 flex flex-row justify-between items-center">
-                <div className="relative mt-2 w-full h-14">
-                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                        <MagnifyingGlassIcon
-                            className="h-5 w-5 text-gray-400"
-                            aria-hidden="true"
-                        />
-                    </div>
-                    <input
-                        type="text"
-                        name="searchTxt"
-                        id="searchTxt"
-                        onChange={(e) => setValueForm(e.target.value)}
-                        className="block w-full rounded-full  border-slate-300 border py-1.5 pl-10 text-rsq-900 placeholder:text-gray-400 sm:text-sm sm:leading-6 outline-0"
-                        placeholder="Teclea el nombre del producto"
+            <div className="mt-4">
+                <div className="relative mt-2">
+                    <ReactSearchAutocomplete
+                        items={dataProds?.length > 0 && dataProds}
+                        onSearch={handleOnSearch}
+                        onSelect={handleOnSelect}
+                        autoFocus
+                        formatResult={formatResult}
+                        fuseOptions={{
+                            includeScore: true,
+                            includeMatches: true,
+                            shouldSort: true,
+                            threshold: 0.3,
+                            location: 0,
+                            distance: 100,
+                            maxPatternLength: 32,
+                            minMatchCharLength: 2,
+                            keys: ["title"],
+                            useExtendedSearch: true,
+                            ignoreFieldNorm: true,
+                        }}
+                        placeholder="Empieza a teclear el nombre del producto"
+                        resultStringKeyName="title"
+                        inputDebounce={300}
                     />
                 </div>
-                <button className="rounded-full ml-2 bg-rsq-400 p-2">
-                    <BsArrowReturnRight className="w-5 h-5 text-white" />
-                </button>
             </div>
             <div className="mt-4 overflow-y-auto h-40 lg:h-80">
-                <ul role="list" className="divide-y divide-gray-100">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 pt-8 lg:p-8">
                     {valueForm !== "" &&
                         dataApi?.length > 0 &&
                         dataApi?.map((item) => (
-                            <li
+                            // <HomeCardList key={item.ID} data={item} />
+                            <div
                                 key={item.ID}
-                                className="flex justify-between gap-x-6 py-5"
+                                className="flex flex-col justify-between gap-x-6 py-5"
                             >
                                 <div className="flex min-w-0 gap-x-4">
                                     {/* <Image
@@ -135,30 +147,34 @@ const HomeList = ({ dataProds }) => {
                                         </p>
                                     </div>
                                 </div>
-                                <div className="hidden shrink-0 sm:flex sm:items-center justify-center gap-x-2">
+                                <div className="hidden shrink-0 sm:flex sm:items-center justify-between gap-x-2">
                                     <p className="text-sm leading-6 text-gray-900">
                                         {item.price}
                                     </p>
 
-                                    <button
-                                        onClick={() => handleBookmark(item)}
-                                    >
-                                        {favsRedux._favList.filter(
-                                            (e) => e.ID === item.ID
-                                        ).length > 0 ? (
-                                            <AiFillStar className="w-6 h-6 text-amber-500" />
-                                        ) : (
-                                            <AiOutlineStar className="w-6 h-6 text-amber-200" />
-                                        )}
-                                    </button>
+                                    <div>
+                                        <button
+                                            onClick={() => handleBookmark(item)}
+                                        >
+                                            {favsRedux._favList.filter(
+                                                (e) => e.ID === item.ID
+                                            ).length > 0 ? (
+                                                <AiFillStar className="w-6 h-6 text-amber-500" />
+                                            ) : (
+                                                <AiOutlineStar className="w-6 h-6 text-amber-200" />
+                                            )}
+                                        </button>
 
-                                    <button onClick={() => handleAddCart(item)}>
-                                        <PlusCircleIcon className="w-6 h-6 text-rsq-200" />
-                                    </button>
+                                        <button
+                                            onClick={() => handleAddCart(item)}
+                                        >
+                                            <PlusCircleIcon className="w-6 h-6 text-rsq-200" />
+                                        </button>
+                                    </div>
                                 </div>
-                            </li>
+                            </div>
                         ))}
-                </ul>
+                </div>
             </div>
         </div>
     );
