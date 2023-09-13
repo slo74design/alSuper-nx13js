@@ -42,7 +42,7 @@ const HomeCart = () => {
     };
 
     const handleShareWhatsapp = (e) => {
-        const number = "+34663402813";
+        const number = "+3411111111";
         let message = "Por favor, debes comprar lo siguiente: \n";
         cartRedux._cartList.forEach((item) => {
             message += "➡ " + item.title + " - " + item.subtitle + "\n";

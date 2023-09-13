@@ -16,6 +16,8 @@ const HomeCategories = ({ distintCats }) => {
     const [valueForm, setValueForm] = useState("");
     const [isLoading, setIsLoading] = useState(true);
 
+    console.log(JSON.stringify(distintCats, null, 2));
+
     // const cats = [...new Set(jsonFinal.map((item) => item.family))];
     // const listCatsSorted = cats.sort();
 
